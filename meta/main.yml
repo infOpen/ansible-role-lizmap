@@ -1,0 +1,18 @@
+---
+
+galaxy_info:
+  author: 'Alexandre Chaussier'
+  description: 'Ansible role to install and configure Lizmap web service'
+  company: 'Infopen (http://www.infopen.pro)'
+  license: 'MIT'
+  min_ansible_version: '2.4'
+  github_branch: 'master'
+  platforms:
+    - name: 'Debian'
+      versions:
+        - 'jessie'
+        - 'Ubuntu'
+  galaxy_tags:
+    - 'geographic'
+    - 'webservice'
+dependencies: []
