@@ -1,0 +1,48 @@
+---
+
+- name: 'INSTALL | FROM ZIP | Download archive'
+  get_url:
+    url: "{{ lizmap_app_package_url }}"
+    dest: "/tmp/{{ lizmap_app_name }}__{{ lizmap_app_version }}.zip"
+
+
+- name: 'INSTALL | FROM ZIP | Extract archive'
+  unarchive:
+    src: "/tmp/{{ lizmap_app_name }}__{{ lizmap_app_version }}.zip"
+    dest: "{{ lizmap_install_root_dir.path }}/"
+    remote_src: True
+    creates: "{{ lizmap_install_root_dir.path }}/{{ lizmap_app_name }}-{{ lizmap_app_version }}"
+  register: '_lizmap_archive_extract'
+
+
+- name: 'CONFIG | Run Lizmap configuration tasks'
+  include: "{{ role_path }}/tasks/configure.yml"
+
+
+- name: 'INSTALL | FROM ZIP | Set rights'
+  command: "lizmap/install/set_rights.sh {{ lizmap_user.name }} {{ lizmap_group.name }}"
+  args:
+    chdir: "{{ lizmap_install_root_dir.path }}/{{ lizmap_app_name }}-{{ lizmap_app_version }}"
+  when: "(_lizmap_archive_extract is not skipped)
+    or (_lizmap_main_config_deployment is changed)
+    or (_lizmap_local_config_deployment is changed)
+    or (_lizmap_profiles_config_deployment is changed)"
+
+
+- name: 'INSTALL | FROM ZIP | Launch installer'
+  command: "php lizmap/install/installer.php"
+  args:
+    chdir: "{{ lizmap_install_root_dir.path }}/{{ lizmap_app_name }}-{{ lizmap_app_version }}"
+  when: "(_lizmap_archive_extract is not skipped)
+    or (_lizmap_main_config_deployment is changed)
+    or (_lizmap_local_config_deployment is changed)
+    or (_lizmap_profiles_config_deployment is changed)"
+
+
+- name: 'INSTALL | FROM ZIP | Link to current'
+  file:
+    src: "{{ lizmap_install_root_dir.path }}/{{ lizmap_app_name}}-{{ lizmap_app_version }}"
+    dest: "{{ lizmap_install_root_dir.path }}/current"
+    owner: "{{ lizmap_user.name }}"
+    group: "{{ lizmap_group.name }}"
+    state: 'link'

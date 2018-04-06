@@ -19,4 +19,5 @@
 - name: 'Converge | Main tasks'
   hosts: 'all'
   roles:
+    - role: 'infOpen.php__0.3.0'
     - role: "ansible-role-lizmap"

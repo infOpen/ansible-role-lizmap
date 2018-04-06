@@ -8,10 +8,9 @@ galaxy_info:
   min_ansible_version: '2.4'
   github_branch: 'master'
   platforms:
-    - name: 'Debian'
+    - name: 'Ubuntu'
       versions:
-        - 'jessie'
-        - 'Ubuntu'
+        - 'xenial'
   galaxy_tags:
     - 'geographic'
     - 'webservice'
