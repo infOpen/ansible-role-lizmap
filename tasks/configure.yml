@@ -1,0 +1,52 @@
+---
+
+# Manage configuration files
+
+- name: 'CONFIG | Initialize configuration files'
+  copy:
+    content: ';<?php die(""); ?>'
+    dest: "{{ item }}"
+    owner: "{{ lizmap_user.name }}"
+    group: "{{ lizmap_group.name }}"
+    force: False
+  with_items:
+    - "{{ lizmap_install_root_dir.path }}/{{ lizmap_app_name }}-{{ lizmap_app_version }}/lizmap/var/config/lizmapConfig.ini.php"
+    - "{{ lizmap_install_root_dir.path }}/{{ lizmap_app_name }}-{{ lizmap_app_version }}/lizmap/var/config/localconfig.ini.php"
+    - "{{ lizmap_install_root_dir.path }}/{{ lizmap_app_name }}-{{ lizmap_app_version }}/lizmap/var/config/profiles.ini.php"
+
+
+- name: 'INSTALL | FROM ZIP | Manage Lizmap main configuration file'
+  ini_file:
+    dest: "{{ lizmap_install_root_dir.path }}/{{ lizmap_app_name }}-{{ lizmap_app_version }}/lizmap/var/config/lizmapConfig.ini.php"
+    section: "{{ item.section | default('services') }}"
+    option: "{{ item.option | default(omit) }}"
+    value: "{{ item.value | default(omit) }}"
+    state: "{{ item.state | default('present') }}"
+    no_extra_spaces: True
+  register: '_lizmap_main_config_deployment'
+  with_items: "{{ lizmap_main_config }}"
+
+
+- name: 'INSTALL | FROM ZIP | Manage Lizmap local configuration file'
+  ini_file:
+    dest: "{{ lizmap_install_root_dir.path }}/{{ lizmap_app_name }}-{{ lizmap_app_version }}/lizmap/var/config/localconfig.ini.php"
+    section: "{{ item.section }}"
+    option: "{{ item.option | default(omit) }}"
+    value: "{{ item.value | default(omit) }}"
+    state: "{{ item.state | default('present') }}"
+    no_extra_spaces: True
+    backup: True
+  register: '_lizmap_local_config_deployment'
+  with_items: "{{ lizmap_local_config }}"
+
+
+- name: 'INSTALL | FROM ZIP | Manage Lizmap profile configuration file'
+  ini_file:
+    dest: "{{ lizmap_install_root_dir.path }}/{{ lizmap_app_name }}-{{ lizmap_app_version }}/lizmap/var/config/profiles.ini.php"
+    section: "{{ item.section }}"
+    option: "{{ item.option | default(omit) }}"
+    value: "{{ item.value | default(omit) }}"
+    state: "{{ item.state | default('present') }}"
+    no_extra_spaces: True
+  register: '_lizmap_profiles_config_deployment'
+  with_items: "{{ lizmap_profiles_config }}"

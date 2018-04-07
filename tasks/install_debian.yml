@@ -1,0 +1,8 @@
+---
+
+- name: 'INSTALL | APT | Install system prerequisites'
+  apt:
+    name: "{{ item.name }}"
+    state: "{{ item.state | default('present') }}"
+    cache_valid_time: "{{ lizmap_repository_cache_valid_time }}"
+  with_items: "{{ lizmap_system_prerequisites }}"
