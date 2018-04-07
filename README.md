@@ -1,6 +1,10 @@
 # lizmap
 
-[![Build Status](https://travis-ci.org/infOpen/ansible-role-lizmap.svg?branch=master)](https://travis-ci.org/infOpen/ansible-role-lizmap)
+[![Build Status](https://img.shields.io/travis/infOpen/ansible-role-lizmap/master.svg?label=travis_master)](https://travis-ci.org/infOpen/ansible-role-lizmap)
+[![Build Status](https://img.shields.io/travis/infOpen/ansible-role-lizmap/develop.svg?label=travis_develop)](https://travis-ci.org/infOpen/ansible-role-lizmap)
+[![Updates](https://pyup.io/repos/github/infOpen/ansible-role-lizmap/shield.svg)](https://pyup.io/repos/github/infOpen/ansible-role-lizmap/)
+[![Python 3](https://pyup.io/repos/github/infOpen/ansible-role-lizmap/python-3-shield.svg)](https://pyup.io/repos/github/infOpen/ansible-role-lizmap/)
+[![Ansible Role](https://img.shields.io/ansible/role/24686.svg)](https://galaxy.ansible.com/infOpen/lizmap/)
 
 Install lizmap package.
 
