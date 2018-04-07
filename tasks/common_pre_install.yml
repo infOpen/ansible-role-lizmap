@@ -1,0 +1,25 @@
+---
+
+- name: 'INSTALL | PRE | Manage Lizmap group'
+  group:
+    name: "{{ lizmap_group.name }}"
+    gid: "{{ lizmap_group.gid | default(omit) }}"
+  when: "lizmap_manage_group"
+
+
+- name: 'INSTALL | PRE | Manage Lizmap user'
+  user:
+    name: "{{ lizmap_user.name }}"
+    uid: "{{ lizmap_user.uid | default(omit) }}"
+    group: "{{ lizmap_user.group | default(omit) }}"
+    shell: "{{ lizmap_user.shell | default(omit) }}"
+  when: "lizmap_manage_user"
+
+
+- name: 'INSTALL | PRE | Ensure Lizmap root installation dir exists'
+  file:
+    path: "{{ lizmap_install_root_dir.path }}"
+    owner: "{{ lizmap_install_root_dir.owner }}"
+    group: "{{ lizmap_install_root_dir.group }}"
+    mode: "{{ lizmap_install_root_dir.mode }}"
+    state: 'directory'

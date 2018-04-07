@@ -1,0 +1,9 @@
+---
+
+# Debian family specific vars
+
+_lizmap_system_prerequisites:
+  - name: 'xauth'
+  - name: 'python-simplejson'
+  - name: 'python-software-properties'
+  - name: 'unzip'
