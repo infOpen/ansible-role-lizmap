@@ -3,7 +3,11 @@
 # Debian family specific vars
 
 _lizmap_system_prerequisites:
-  - name: 'xauth'
+  - name: 'libspatialite7'
+  - name: 'libsqlite3-mod-spatialite'
   - name: 'python-simplejson'
   - name: 'python-software-properties'
+  - name: 'python-pyspatialite'
+  - name: 'spatialite-bin'
   - name: 'unzip'
+  - name: 'xauth'
