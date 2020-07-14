@@ -5,9 +5,8 @@
 _lizmap_system_prerequisites:
   - name: 'libspatialite7'
   - name: 'libsqlite3-mod-spatialite'
-  - name: 'python-simplejson'
-  - name: 'python-software-properties'
-  - name: 'python-pyspatialite'
+  - name: 'python3-simplejson'
+  - name: 'python3-software-properties'
   - name: 'spatialite-bin'
   - name: 'unzip'
   - name: 'xauth'

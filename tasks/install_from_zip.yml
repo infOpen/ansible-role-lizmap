@@ -41,7 +41,7 @@
 
 - name: 'INSTALL | FROM ZIP | Link to current'
   file:
-    src: "{{ lizmap_install_root_dir.path }}/{{ lizmap_app_name}}-{{ lizmap_app_version }}"
+    src: "{{ lizmap_install_root_dir.path }}/{{ lizmap_app_name }}-{{ lizmap_app_version }}"
     dest: "{{ lizmap_install_root_dir.path }}/current"
     owner: "{{ lizmap_user.name }}"
     group: "{{ lizmap_group.name }}"

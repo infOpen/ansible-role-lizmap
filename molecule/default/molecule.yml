@@ -4,31 +4,47 @@ dependency:
   name: 'galaxy'
 driver:
   name: 'docker'
-lint:
-  name: 'yamllint'
+lint: |
+  set -e
+  yamllint .
+  ansible-lint
+  flake8
 platforms:
-  - name: "lizmap-docker-xenial"
-    image: 'solita/ubuntu-systemd:16.04'
-    command: '/sbin/init'
-    cap_add:
-      - 'SYS_PTRACE'
+  - name: "lizmap-docker-debian9"
+    groups:
+      - 'debian'
+    image: 'jrei/systemd-debian:9'
     privileged: True
+    volumes:
+      - '/sys/fs/cgroup:/sys/fs/cgroup:ro'
+  - name: "lizmap-docker-debian10"
+    groups:
+      - 'debian'
+    image: 'jrei/systemd-debian:10'
+    privileged: True
+    volumes:
+      - '/sys/fs/cgroup:/sys/fs/cgroup:ro'
+  - name: "lizmap-docker-ubuntu18"
+    groups:
+      - 'ubuntu'
+    image: 'jrei/systemd-ubuntu:18.04'
+    privileged: True
+    volumes:
+      - '/sys/fs/cgroup:/sys/fs/cgroup:ro'
+  - name: "lizmap-docker-ubuntu20"
+    groups:
+      - 'ubuntu'
+    image: 'jrei/systemd-ubuntu:20.04'
+    privileged: True
+    volumes:
+      - '/sys/fs/cgroup:/sys/fs/cgroup:ro'
 provisioner:
   name: 'ansible'
-  lint:
-    name: 'ansible-lint'
   inventory:
     group_vars:
       all:
         lizmap_install_demo_repositories: False
         lizmap_persistant_crypt_key: '922584ef8185a91ae85a521d7d92e278'
-        php_packages:
-          - name: 'php7.0-cgi'
-          - name: 'php7.0-gd'
-          - name: 'php7.0-sqlite3'
-          - name: 'php7.0-curl'
-          - name: 'php7.0-xml'
-          - name: 'php7.0-xmlrpc'
         __php_modules_enabled:
           - 'curl'
           - 'dom'
@@ -44,14 +60,32 @@ provisioner:
           - 'xsl'
         php_modules_enabled: "{{ _php_modules_enabled + __php_modules_enabled }}"
         php_dependencies_services: []
-    host_vars: {}
+        php_packages:
+          - name: "php{{ _php_version }}-cgi"
+          - name: "php{{ _php_version }}-gd"
+          - name: "php{{ _php_version }}-sqlite3"
+          - name: "php{{ _php_version }}-curl"
+          - name: "php{{ _php_version }}-xml"
+          - name: "php{{ _php_version }}-xmlrpc"
 scenario:
   name: 'default'
+  test_sequence:
+    - dependency
+    - lint
+    - cleanup
+    - destroy
+    - syntax
+    - create
+    - prepare
+    - converge
+    # - idempotence
+    - side_effect
+    - verify
+    - cleanup
+    - destroy
 verifier:
   name: 'testinfra'
   additional_files_or_dirs:
     - '../../tests'
-  lint:
-    name: 'flake8'
   options:
     sudo: True
