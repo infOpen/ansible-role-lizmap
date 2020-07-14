@@ -1,6 +1,7 @@
 ---
 
 - name: 'INSTALL | PRE | Manage Lizmap group'
+  become: True
   group:
     name: "{{ lizmap_group.name }}"
     gid: "{{ lizmap_group.gid | default(omit) }}"
@@ -8,6 +9,7 @@
 
 
 - name: 'INSTALL | PRE | Manage Lizmap user'
+  become: True
   user:
     name: "{{ lizmap_user.name }}"
     uid: "{{ lizmap_user.uid | default(omit) }}"
@@ -17,6 +19,7 @@
 
 
 - name: 'INSTALL | PRE | Ensure Lizmap root installation dir exists'
+  become: True
   file:
     path: "{{ lizmap_install_root_dir.path }}"
     owner: "{{ lizmap_install_root_dir.owner }}"
