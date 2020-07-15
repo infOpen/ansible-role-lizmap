@@ -10,30 +10,22 @@ testinfra_hosts = AnsibleRunner(
     os.environ['MOLECULE_INVENTORY_FILE']).get_hosts('all')
 
 
-@pytest.mark.parametrize('distribution,name', [
-    ('debian', 'xauth'),
-    ('debian', 'python-simplejson'),
-    ('debian', 'python-software-properties'),
-    ('debian', 'unzip'),
-    ('ubuntu', 'xauth'),
-    ('ubuntu', 'python-simplejson'),
-    ('ubuntu', 'python-software-properties'),
-    ('ubuntu', 'unzip'),
+@pytest.mark.parametrize('name', [
+    ('xauth'),
+    ('python3-simplejson'),
+    ('python3-software-properties'),
+    ('unzip'),
 ])
-def test_packages(host, distribution, name):
+def test_packages(host, name):
     """
     Ensure QGIS Server packages installed
     """
-
-    if host.system_info.distribution != distribution:
-        pytest.skip('Distribution not managed for this package')
 
     assert host.package(name).is_installed
 
 
 @pytest.mark.parametrize('path', [
     ('/opt/lizmap/'),
-    ('/opt/lizmap/current'),
     ('/opt/lizmap/current/lizmap/var/config'),
     ('/opt/lizmap/current/lizmap/var/log'),
 ])

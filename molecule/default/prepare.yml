@@ -1,5 +1,8 @@
 ---
-- name: Prepare
-  hosts: all
-  gather_facts: False
-  tasks: []
+
+# Role tests
+
+- name: 'Prepare | Main tasks'
+  hosts: 'all'
+  roles:
+    - role: "infOpen.php__0.4.0"

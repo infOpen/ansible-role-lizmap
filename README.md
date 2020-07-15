@@ -1,7 +1,7 @@
 # lizmap
 
-[![Build Status](https://img.shields.io/travis/infOpen/ansible-role-lizmap/master.svg?label=travis_master)](https://travis-ci.org/infOpen/ansible-role-lizmap)
-[![Build Status](https://img.shields.io/travis/infOpen/ansible-role-lizmap/develop.svg?label=travis_develop)](https://travis-ci.org/infOpen/ansible-role-lizmap)
+[![CI](https://github.com/infOpen/ansible-role-lizmap/workflows/CI/badge.svg)](https://github.com/infOpen/ansible-role-lizmap/actions)
+[![Mergify Status][mergify-status]][mergify]
 [![Updates](https://pyup.io/repos/github/infOpen/ansible-role-lizmap/shield.svg)](https://pyup.io/repos/github/infOpen/ansible-role-lizmap/)
 [![Python 3](https://pyup.io/repos/github/infOpen/ansible-role-lizmap/python-3-shield.svg)](https://pyup.io/repos/github/infOpen/ansible-role-lizmap/)
 [![Ansible Role](https://img.shields.io/ansible/role/24686.svg)](https://galaxy.ansible.com/infOpen/lizmap/)
@@ -10,22 +10,25 @@ Install lizmap package.
 
 ## Requirements
 
-This role requires Ansible 2.4 or higher,
+This role requires Ansible 2.8 or higher,
 and platform requirements are listed in the metadata file.
 
 ## Testing
 
-This role use [Molecule](https://github.com/metacloud/molecule/) to run tests.
+This role use [Molecule](https://github.com/ansible-community/molecule) to run tests.
 
-Local and Travis tests run tests on Docker by default.
+Local and Github Actions tests run tests on Docker by default.
 See molecule documentation to use other backend.
 
 Currently, tests are done on:
-- Ubuntu Xenial
+- Debian Buster
+- Debian Stretch
+- Ubuntu Bionic
+- Ubuntu Focal
 
 and use:
-- Ansible 2.4.x
-- Ansible 2.5.x
+- Ansible 2.8.x
+- Ansible 2.9.x
 
 ### Running tests
 
@@ -33,6 +36,14 @@ and use:
 
 ```
 $ tox
+```
+
+You can also configure molecule options and molecule command using environment variables:
+* `MOLECULE_OPTIONS` Default: "--debug"
+* `MOLECULE_COMMAND` Default: "test"
+
+```
+$ MOLECULE_OPTIONS='' MOLECULE_COMMAND=converge tox
 ```
 
 ## Role Variables
@@ -182,5 +193,8 @@ MIT
 ## Author Information
 
 Alexandre Chaussier (for Infopen company)
-- http://www.infopen.pro
+- https://www.infopen.pro
 - a.chaussier [at] infopen.pro
+
+[mergify]: https://mergify.io
+[mergify-status]: https://img.shields.io/endpoint.svg?url=https://gh.mergify.io/badges/infOpen/ansible-role-lizmap&style=flat
